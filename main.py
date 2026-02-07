@@ -2,14 +2,21 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.datasets import imdb
 from tensorflow.keras.preprocessing import sequence
-from tensorflow.keras.models import load_model
+#from tensorflow.keras.models import load_model
 import streamlit as st
 
 word_index = imdb.get_word_index()
 reverse_word_index = {value:key for key,value in word_index.items()}
 
 
-model = load_model('simple_rnn_imdb.h5')
+from keras.models import load_model
+
+model = load_model(
+    "simple_rnn_imdb.h5",
+    compile=False,
+    safe_mode=False
+)
+
 
 def decode_review(encoded_review):
     return ' '.join([reverse_word_index.get(i-3,'?') for i in encoded_review])
